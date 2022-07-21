@@ -5,7 +5,7 @@ import sm3
 def rho_attack(mes):
     mes_list=[mes]
     hash_list=[]
-    for i in range(pow(2,32)):
+    for i in range(pow(2,16)):
         mes=sm3.sm3_hash(mes)
         hash_list.append(mes[0:8]) #寻找前32位相同
         mes_list.append(mes)
