@@ -30,3 +30,15 @@ def birthday_attack():
 
 if __name__ == '__main__':
     print(birthday_attack())
+    
+"""    
+消息1：'1380803642756806850'
+
+哈希值1：'1fe5f161fc1861a829c77e12ccc699b7c160187288ba2d2d5ed246a71abac7ff'
+
+消息2：'9545009096257695477'
+
+哈希值2：'1fe5ea8e8fd0084449ac6fccabb6cad9a618b586942af0131d35e1af198cac0d'
+
+对比哈希值1与哈希值2，可知其前16位均为'1fe5'
+"""
