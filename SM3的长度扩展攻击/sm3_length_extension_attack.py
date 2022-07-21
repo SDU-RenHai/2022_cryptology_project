@@ -48,3 +48,6 @@ if __name__ == '__main__':
     print('需要添加在其后的内容:',mes_add)
     compare(mes, mes_add)
 
+"""
+在该项目中，随机选取的消息为'my name is renhai'，需要在其后添加的内容为'I like cryptology'，最终伪造出的散列为'5957b4e3394553c1839a70d64b0f15ec3bb39265b3ee7d78af4fd623e9664ae8'
+"""
