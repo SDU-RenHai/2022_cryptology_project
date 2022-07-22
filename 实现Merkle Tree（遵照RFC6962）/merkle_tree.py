@@ -137,3 +137,12 @@ def test_func():
 if __name__ == '__main__':
     test_func()
 
+"""
+测试结果实例：
+
+test_node = root.left.right.left.right
+根节点的Hash值: cd5d050a041ba7b94fd5c60f286c1deb941bdf3e5ac70374df7a340faefde00f
+路径： ['l', 'r', 'l', 'r', '0']
+Hash值列表： ['cd5d050a041ba7b94fd5c60f286c1deb941bdf3e5ac70374df7a340faefde00f', 'f5212d9ad916fb2164f5d9968275ffc09ca1bdde3375d1dd46fe2738fd57463e', '7a0e2767e09348afac60952e19ac5bef2c741b8f4d82aee12296738063b9b63a', 'ab7ea80d4f5cf57f5d98197bd6605a92194fa4e52030d75b96ce19aedab4c236', '60f6d2e649fb8dfc8ea4f0d64859fbd19a77973b1d6ed6d7ece6e97e1c7ec3b2', 'd7222dfaf33148c1f91b7d6f6d51d3e9542a1d2452c15229ca5c65a544d12795d5446567f09104f9a723d7ddadc9d87e9f30d69acac2f0cc633cc606295140e2']
+路径有效，节点存在!
+"""
