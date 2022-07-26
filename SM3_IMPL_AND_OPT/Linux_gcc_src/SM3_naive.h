@@ -1,7 +1,7 @@
 #ifndef SM3_NAIVE_H
 #define SM3_NAIVE_H
 
-#include "SM3_tyte.h"
+#include "SM3_type.h"
 #include "SM3_basic.h"
 #include <array>
 

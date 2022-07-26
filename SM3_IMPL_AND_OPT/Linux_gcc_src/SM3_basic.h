@@ -1,7 +1,7 @@
 #ifndef SM3_BASIC_H
 #define SM3_BASIC_H
 
-#include "SM3_tyte.h"
+#include "SM3_type.h"
 #include <string>
 
 #define WORD_ROTATE_LEFT(X, len)  (((WORD)(X) << len) | ((WORD)(X) >> (32 - len)))

@@ -1,5 +1,7 @@
 
 #include "SM3_basic.h"
+#include <algorithm>
+#include <cstring>
 
 char int2char(uint8_t input)
 {
