@@ -75,7 +75,43 @@ const char* word2string(const void* buffer, size_t wordlen);
 
 **SM3_naive** 和 **SM3_simd**：
 
-SM3_naive 和 SM3_simd分别用来实现朴素的SM3算法和SIMD加速的SM3算法。
+SM3_naive 和 SM3_simd分别用来实现朴素的SM3算法和SIMD加速的SM3算法，这些算法都是使用类来实现：
+
+- 由于`simd`加速的SM3实现需要并行地对最多8个消息进行运算，因此`push_msg()`接受一个`const std::array<const void*, 8>&`类型的变量作为参数。
+- `msg_expansion` 和 `compress`函数分别用来实现消息扩充和轮压缩过程。
+- `sm3`是对`msg_expansion` 和 `compress`函数的合并，也是向外提供的顶层方法。
+- `get_hash_str`用于接受Hash结果。
+
+> **关于SIMD加速实现的SM3算法**：
+>
+> 在这里SIMD加速的方法是：**Hash data from multiple independent streams at the same time**.
+>
+> 再Naive中实现的一系列辅助函数，包括：
+>
+> ```C++
+> #define FF_0_15(X, Y, Z)	( (WORD)(X) ^ (WORD)(Y) ^ (WORD)(Z) )
+> #define FF_16_63(X, Y, Z)	( ((WORD)(X) & (WORD)(Y)) | ((WORD)(X) & (WORD)(Z)) | ((WORD)(Y) & (WORD)(Z)) )
+> 
+> #define GG_0_15(X, Y, Z)	( (WORD)(X) ^ (WORD)(Y) ^ (WORD)(Z) )
+> #define GG_16_63(X, Y, Z)	( ((WORD)(X) & (WORD)(Y)) | ((~(WORD)(X)) & (WORD)(Z)) )
+> 
+> #define P0(X)	( (WORD)(X) ^ WORD_ROTATE_LEFT(X, 9) ^ WORD_ROTATE_LEFT(X, 17) )
+> #define P1(X)	( (WORD)(X) ^ WORD_ROTATE_LEFT(X, 15) ^ WORD_ROTATE_LEFT(X, 23) )
+> ```
+>
+> 在SIMD加速实现中均使用SIMD替换实现：
+>
+> ```c++
+> static inline __m256i SIMD_word_rotate_sll (__m256i mm_val, size_t imm);
+> static inline __m256i SIMD_P0(__m256i mm_val);
+> static inline __m256i SIMD_P1(__m256i mm_val);
+> static inline __m256i SIMD_FF_0_15(__m256i A, __m256i B, __m256i C);
+> static inline __m256i SIMD_FF_16_63(__m256i A, __m256i B, __m256i C);
+> static inline __m256i SIMD_GG_0_15(__m256i A, __m256i B, __m256i C);
+> static inline __m256i SIMD_GG_16_63(__m256i A, __m256i B, __m256i C);
+> ```
+>
+> 另外，在代码中也可以看到对`compress`和`msg_expansion`的SIMD加速实现。
 
 **main**：
 
