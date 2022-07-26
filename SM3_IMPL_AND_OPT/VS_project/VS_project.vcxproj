@@ -129,12 +129,14 @@
   <ItemGroup>
     <ClInclude Include="SM3_naive.h" />
     <ClInclude Include="SM3_basic.h" />
+    <ClInclude Include="SM3_simd.h" />
     <ClInclude Include="SM3_tyte.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SM3_naive.cpp" />
     <ClCompile Include="SM3_basic.cpp" />
+    <ClCompile Include="SM3_simd.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

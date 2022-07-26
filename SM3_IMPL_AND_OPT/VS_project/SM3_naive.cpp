@@ -1,21 +1,8 @@
 #include "SM3_naive.h"
 
-#include <iostream>
-using std::cout;
-using std::endl;
-using std::hex;
-
-SM3_Naive_Engine::SM3_Naive_Engine()
-{
-	IV = { IV0, IV1, IV2, IV3, IV4, IV5, IV6, IV7 };
-	A = B = C = D = E = F = G = H = 0;
-	W = std::array<WORD, 68>{};
-	W_stroke = std::array<WORD, 64>{};
-}
-
 void SM3_Naive_Engine::msg_expansion(const WORD* block)
 {
-	for (size_t i = 0; i < 16; ++i) this->W[i] = block[i];
+	memcpy(this->W.data(), block, sizeof(WORD) * 16);
 	for (size_t i = 16; i < 68; ++i) {
 		WORD X = W[i - 16] ^ W[i - 9] ^ WORD_ROTATE_LEFT(W[i - 3], 15);
 		WORD Y = WORD_ROTATE_LEFT(W[i - 13], 7);
@@ -47,7 +34,7 @@ void SM3_Naive_Engine::compress()
 	}
 
 	for (size_t j = 16; j <= 63; ++j) {
-		SS1 = WORD_ROTATE_LEFT(WORD_ROTATE_LEFT(A, 12) + E + WORD_ROTATE_LEFT(T_16_63, j), 7);
+		SS1 = WORD_ROTATE_LEFT(WORD_ROTATE_LEFT(A, 12) + E + WORD_ROTATE_LEFT(T_16_63, (j % 32)), 7);
 		SS2 = SS1 ^ WORD_ROTATE_LEFT(A, 12);
 		TT1 = FF_16_63(A, B, C) + D + SS2 + W_stroke[j];
 		TT2 = GG_16_63(E, F, G) + H + SS1 + W[j];
@@ -89,10 +76,6 @@ void SM3_Naive_Engine::sm3(const std::string& msg)
 	sm3(msg.c_str(), msg.length());
 }
 
-const std::array<WORD, 8>& SM3_Naive_Engine::get_hash()
-{
-	return IV;
-}
 
 const char* SM3_Naive_Engine::get_hash_str()
 {

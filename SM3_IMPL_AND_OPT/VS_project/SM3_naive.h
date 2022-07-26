@@ -38,13 +38,11 @@ private:
 	void compress();
 
 public:
-	SM3_Naive_Engine();
 	
 	void sm3(const WORD* input, size_t blocklen);
 	void sm3(const char* msg, size_t msglen);
 	void sm3(const std::string& msg);
 
-	const std::array<WORD, 8> & get_hash();
 	const char* get_hash_str();
 };
 

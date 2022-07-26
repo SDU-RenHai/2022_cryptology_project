@@ -24,6 +24,9 @@
     <ClInclude Include="SM3_naive.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SM3_simd.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SM3_basic.cpp">
@@ -33,6 +36,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SM3_simd.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
