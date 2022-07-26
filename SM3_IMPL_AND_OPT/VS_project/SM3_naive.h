@@ -1,0 +1,47 @@
+#ifndef SM3_NAIVE_H
+#define SM3_NAIVE_H
+
+#include "SM3_tyte.h"
+#include "SM3_basic.h"
+#include <array>
+
+#define IV0  0x7380166f
+#define IV1  0x4914b2b9
+#define IV2  0x172442d7
+#define IV3  0xda8a0600
+#define IV4  0xa96f30bc
+#define IV5  0x163138aa
+#define IV6  0xe38dee4d
+#define IV7  0xb0fb0e4e
+
+#define FF_0_15(X, Y, Z)	( (WORD)(X) ^ (WORD)(Y) ^ (WORD)(Z) )
+#define FF_16_63(X, Y, Z)	( ((WORD)(X) & (WORD)(Y)) | ((WORD)(X) & (WORD)(Z)) | ((WORD)(Y) & (WORD)(Z)) )
+
+#define GG_0_15(X, Y, Z)	( (WORD)(X) ^ (WORD)(Y) ^ (WORD)(Z) )
+#define GG_16_63(X, Y, Z)	( ((WORD)(X) & (WORD)(Y)) | ((~(WORD)(X)) & (WORD)(Z)) )
+
+#define P0(X)	( (WORD)(X) ^ WORD_ROTATE_LEFT(X, 9) ^ WORD_ROTATE_LEFT(X, 17) )
+#define P1(X)	( (WORD)(X) ^ WORD_ROTATE_LEFT(X, 15) ^ WORD_ROTATE_LEFT(X, 23) )
+
+class SM3_Naive_Engine
+{
+private:
+	WORD IV_A, IV_B, IV_C, IV_D, IV_E, IV_F, IV_G, IV_H;
+	WORD A, B, C, D, E, F, G, H;
+	std::array<WORD, 68> W;
+	std::array<WORD, 64> W_stroke;
+
+public:
+	SM3_Naive_Engine();
+
+	void msg_expansion(const WORD* block);
+	const char* get_W_str();
+	const char* get_W_stroke_str();
+
+
+
+};
+
+#endif // !SM3_NAIVE_H
+
+

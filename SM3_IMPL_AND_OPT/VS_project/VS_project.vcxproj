@@ -127,12 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="SM3NaiveEngine.h" />
+    <ClInclude Include="SM3_naive.h" />
     <ClInclude Include="SM3_basic.h" />
     <ClInclude Include="SM3_tyte.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SM3NaiveEngine.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SM3_naive.cpp" />
     <ClCompile Include="SM3_basic.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
