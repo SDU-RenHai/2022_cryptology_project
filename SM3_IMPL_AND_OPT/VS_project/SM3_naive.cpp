@@ -7,14 +7,7 @@ using std::hex;
 
 SM3_Naive_Engine::SM3_Naive_Engine()
 {
-	IV_A = IV0;
-	IV_B = IV1;
-	IV_C = IV2;
-	IV_D = IV3;
-	IV_E = IV4;
-	IV_F = IV5;
-	IV_G = IV6;
-	IV_H = IV7;
+	IV = { IV0, IV1, IV2, IV3, IV4, IV5, IV6, IV7 };
 	A = B = C = D = E = F = G = H = 0;
 	W = std::array<WORD, 68>{};
 	W_stroke = std::array<WORD, 64>{};
@@ -25,16 +18,8 @@ void SM3_Naive_Engine::msg_expansion(const WORD* block)
 	for (size_t i = 0; i < 16; ++i) this->W[i] = block[i];
 	for (size_t i = 16; i < 68; ++i) {
 		WORD X = W[i - 16] ^ W[i - 9] ^ WORD_ROTATE_LEFT(W[i - 3], 15);
-		cout << "W[i-16]: " << hex << W[i - 16] << 
-			", W[i-9]: " << hex << W[i - 9] << 
-			", W[i-3]: " << hex << W[i - 3] <<
-			", W[i-3]<<<15: " << hex << WORD_ROTATE_LEFT(W[i - 3], 15) << endl;
-		cout << "X: "<< hex << X << endl;
 		WORD Y = WORD_ROTATE_LEFT(W[i - 13], 7);
-		cout << "W[i-13]: " << W[i - 13] << ", Y: " << hex << Y << endl;
 		this->W[i] = P1(X) ^ Y ^ W[i - 6];
-		cout << "W[i-6]: " << W[i - 6] << endl;
-		cout << "ANS: " << this->W[i] << endl;
 	}
 	for (size_t i = 0; i < 64; ++i) this->W_stroke[i] = W[i] ^ W[i + 4];
 }
@@ -47,6 +32,65 @@ const char* SM3_Naive_Engine::get_W_str()
 const char* SM3_Naive_Engine::get_W_stroke_str()
 {
 	return word2string((void*)this->W_stroke.data(), 64);
+}
+
+void SM3_Naive_Engine::compress()
+{
+	WORD SS1, SS2, TT1, TT2;
+
+	A = IV[0];
+	B = IV[1];
+	C = IV[2];
+	D = IV[3];
+	E = IV[4];
+	F = IV[5];
+	G = IV[6];
+	H = IV[7];
+
+	cout << get_register_str() << endl;
+
+	for (size_t j = 0; j < 64; ++j) {
+
+		if (j <= 15) SS1 = WORD_ROTATE_LEFT(WORD_ROTATE_LEFT(A, 12) + E + WORD_ROTATE_LEFT(T_0_15, j), 7);
+		else         SS1 = WORD_ROTATE_LEFT(WORD_ROTATE_LEFT(A, 12) + E + WORD_ROTATE_LEFT(T_16_63, j), 7);
+
+		SS2 = SS1 ^ WORD_ROTATE_LEFT(A, 12);
+
+		if (j <= 15) TT1 = FF_0_15(A, B, C) + D + SS2 + W_stroke[j];
+		else         TT1 = FF_16_63(A, B, C) + D + SS2 + W_stroke[j];
+
+		if (j <= 15) TT2 = GG_0_15(E, F, G) + H + SS1 + W[j];
+		else         TT2 = GG_16_63(E, F, G) + H + SS1 + W[j];
+
+		D = C;
+		C = WORD_ROTATE_LEFT(B, 9);
+		B = A;
+		A = TT1;
+		H = G;
+		G = WORD_ROTATE_LEFT(F, 19);
+		F = E;
+		E = P0(TT2);
+	}
+
+	IV[0] ^= A;
+	IV[1] ^= B;
+	IV[2] ^= C;
+	IV[3] ^= D;
+	IV[4] ^= E;
+	IV[5] ^= F;
+	IV[6] ^= G;
+	IV[7] ^= H;
+}
+
+const char* SM3_Naive_Engine::get_register_str()
+{
+	std::array<WORD, 8> regs { A, B, C, D, E, F, G, H };
+	return word2string((void*)regs.data(), 8);
+}
+
+const char* SM3_Naive_Engine::get_IV_str()
+{
+	return word2string(IV.data(), 8);
 }
 
 

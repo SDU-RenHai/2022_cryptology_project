@@ -14,6 +14,9 @@
 #define IV6  0xe38dee4d
 #define IV7  0xb0fb0e4e
 
+#define T_0_15		0x79cc4519
+#define T_16_63		0x7a879d8a
+
 #define FF_0_15(X, Y, Z)	( (WORD)(X) ^ (WORD)(Y) ^ (WORD)(Z) )
 #define FF_16_63(X, Y, Z)	( ((WORD)(X) & (WORD)(Y)) | ((WORD)(X) & (WORD)(Z)) | ((WORD)(Y) & (WORD)(Z)) )
 
@@ -26,19 +29,21 @@
 class SM3_Naive_Engine
 {
 private:
-	WORD IV_A, IV_B, IV_C, IV_D, IV_E, IV_F, IV_G, IV_H;
-	WORD A, B, C, D, E, F, G, H;
+	std::array<WORD, 8> IV;
 	std::array<WORD, 68> W;
 	std::array<WORD, 64> W_stroke;
+	WORD A, B, C, D, E, F, G, H;
 
 public:
 	SM3_Naive_Engine();
 
 	void msg_expansion(const WORD* block);
+	void compress();
+
 	const char* get_W_str();
 	const char* get_W_stroke_str();
-
-
+	const char* get_register_str();
+	const char* get_IV_str();
 
 };
 
