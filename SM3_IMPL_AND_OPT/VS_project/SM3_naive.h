@@ -34,17 +34,18 @@ private:
 	std::array<WORD, 64> W_stroke;
 	WORD A, B, C, D, E, F, G, H;
 
-public:
-	SM3_Naive_Engine();
-
 	void msg_expansion(const WORD* block);
 	void compress();
 
-	const char* get_W_str();
-	const char* get_W_stroke_str();
-	const char* get_register_str();
-	const char* get_IV_str();
+public:
+	SM3_Naive_Engine();
+	
+	void sm3(const WORD* input, size_t blocklen);
+	void sm3(const char* msg, size_t msglen);
+	void sm3(const std::string& msg);
 
+	const std::array<WORD, 8> & get_hash();
+	const char* get_hash_str();
 };
 
 #endif // !SM3_NAIVE_H
