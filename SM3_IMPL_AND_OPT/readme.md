@@ -56,6 +56,38 @@
 
 
 
+## 代码说明
+
+**SM3_basic**:
+
+SM3_basic中包含了实现SM3的一些基础的内容。具体包括：
+
+```C++
+// 用于实现循环移位。
+#define WORD_ROTATE_LEFT(X, len)  (((WORD)(X) << len) | ((WORD)(X) >> (32 - len)))
+// 将0-16的整型转化为'0'-'F'的字符型（IO used）。
+char int2char(uint8_t input);
+// 用于对消息进行padding，并转化为512比特对齐的blocks。
+void* msg2blocks_with_padding(const char* msg, size_t msglen, size_t& blocklen);
+// 用于输出结果。
+const char* word2string(const void* buffer, size_t wordlen);
+```
+
+**SM3_naive** 和 **SM3_simd**：
+
+SM3_naive 和 SM3_simd分别用来实现朴素的SM3算法和SIMD加速的SM3算法。
+
+**main**：
+
+main中有两个函数，分别是`sm3_test()`和`performance`。其中：
+
+- `sm3_test()`分别使用Naive和SIMD加速的SM3对消息`abc`和消息`abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd`进行Hash，并输出结果。这主要是为了验证正确性。
+- `performance`使用`test`文件夹中的测试数据进行性能的测试。
+
+这两个函数的结果见下文（结果展示部分）。
+
+
+
 ## 结果展示
 
 在Windows上的运行截图如下所示：
