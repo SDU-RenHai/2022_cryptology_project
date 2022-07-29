@@ -1,5 +1,10 @@
-实现思路
+项目介绍
 ===
+:heavy_check_mark: **Project: Impl Merkle Tree following RFC6962**  
+## 项目介绍  
+该项目遵照RFC6962标准，实现Merkle Tree。Merkle Tree类似于二叉树，叶子节点和树节点中的值均为Hash值，其结构如下图所示。计算过程中，自底向上，两两配对，并添加前缀码，若叶子节点个数为奇数，则末尾节点上移一层参与计算。
+
+
  * **定义Merkle Tree的类结构**  
  包括左子节点、右子节父节点、兄弟节点、是否为根节点、是否为父节点的左子树、本节点的值、Hash值等。
  * **构造Merkle Tree**  
