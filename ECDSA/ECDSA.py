@@ -71,22 +71,8 @@ def  rs_rs(s,sign,vk,mes):
     sign_2 = sign.hex()[:64] + s_2
     sign_2 = binascii.unhexlify(sign_2)
     print('使用原签名进行验证:',vk.verify(sign, mes, hashfunc=hashlib.sha256))
-    print('使用新签名进行验证',vk.verify(sign_2, mes, hashfunc=hashlib.sha256),'\n')
+    print('使用新签名进行验证：',vk.verify(sign_2, mes, hashfunc=hashlib.sha256),'\n')
 
-#若验签时不需要mes，则可对任意消息进行签名伪造
-def loss_mes_forge(n,sk):
-    u = random.randint(1, n)
-    v = random.randint(1, n)
-    G = sk.curve.generator
-    d = int(sk.to_string().hex(), 16)
-    P = G * d
-    r1 = (u * G + P * v).x()
-    s1 = r1 * libnum.invmod(v, n)
-    e1 = r1 * u * libnum.invmod(v, n) % n
-    w = libnum.invmod(s1, n) % n
-    eg = (e1 * w * G + r1 * w * P)
-    if eg.x() == r1:
-        print('新签名通过验证，伪造成功！','\n')
 
 #在ECDSA和Schnorr签名中使用相同的d和k，导致d泄露
 def ecdsa_schnorr(d,sk,mes,K,n,s,r,e):
@@ -101,15 +87,32 @@ if __name__ == '__main__':
     sk,vk,d,P,n,K,mes,sign,r,s,e = init_()
     print('泄露k导致d的泄露:')
     loss_k_loss_d(mes, s, r, K, n, e)
-    print('重复使用k导致d的泄露')
+    print('重复使用k导致d的泄露：')
     reuse_k_loss_d(sk, K, n, e,r,s)
     print('两个用户,若使用相同的K,可推断出相互的d:')
     two_k_loss_d(d, K, e, s, n)
     print('(r,s)是有效签名，则(r,-s)也是有效签名:')
     rs_rs(s, sign, vk, mes)
-    print('若验签时不需要mes,则可对任意消息进行签名伪造:')
-    loss_mes_forge(n, sk)
     print('在ECDSA和Schnorr签名中使用相同的d和k,会导致d泄露:')
     ecdsa_schnorr(d, sk, mes, K, n, s, r, e)
 
+'''
+-------------------------------测试案例----------------------------
+泄露k导致d的泄露:
+在已知K的情况下成功计算出d: 12643371063607858608063285050982054588734334218581597868454536345178685731814 
 
+重复使用k导致d的泄露:
+在对mes和mes_2使用共同的K后,计算出d: 12643371063607858608063285050982054588734334218581597868454536345178685731814 
+
+两个用户,若使用相同的K,可推断出相互的d:
+相互推断出的d1: 12643371063607858608063285050982054588734334218581597868454536345178685731814
+相互推断出的d2: 51212437160523107654165670698068276999180155434749468718112358492148705040269 
+
+(r,s)是有效签名，则(r,-s)也是有效签名:
+使用原签名进行验证: True
+使用新签名进行验证: True 
+
+在ECDSA和Schnorr签名中使用相同的d和k,会导致d泄露:
+在两个签名中使用相同d,k,计算出的d: 12643371063607858608063285050982054588734334218581597868454536345178685731814
+对比计算出的d和原d: True
+'''
