@@ -3,11 +3,31 @@
 :heavy_check_mark: **project: implement SM3**   
 :heavy_check_mark: **project: implement the naïve birthday attack of reduced SM3**  
 :heavy_check_mark: **project: implement the Rho method of reduced SM3**  
+## 项目介绍 
+该项目中主要包含上述三个project，首先用Python实现SM3算法（对应`sm3.py`），随后分别根据**生日攻击方法**、**Rho方法**，实现针对SM3算法的碰撞攻击（分别对应`sm3_birthday_attack.py`、`sm3_rho_attack.py`），最终成功找到一对Hash值前**32bit**相等的消息，具体如下：  
+ * 消息1：`'c563692c21e31639f127ffc500d142bae4b7a6746a69397d9eae124bc47c4527'`
+ * 哈希值1：`'687fcd9eea0c49dac2714ef40d9bbcafaa614b63e40ef5092803251fc78212c5'`
+ * 消息2：`'7e2a72bb73f3c68b5e585822458b2536ac5b787152dabd70c7bf8c8c7ab1512f'`
+ * 哈希值2：`'687fcd9ec430f9dbc2f9d1e6f2c447dd873c88580ff325aa6586272fd669094d'`
+ * 对比哈希值1与哈希值2，可知其前32位均为`'687fcd9e'`  
  ## 运行指导 
  **开发环境：** 
  * Windows Visual Studio Code  
  * Python 3.7.9  
-**依赖库：**    
+ 
+ **依赖库：**  
+ ```Python
+ import random
+ ```
+ 
+ **SM3算法代码的执行：**  
+ * 运行`sm3.py`
+ * 运行结果：
+ 
+ 
+ **生日攻击
+ 
+ 
  
  该项目由sm3的python实现、生日攻击、rho方法三部分组成，最终找到了最多前32bit的碰撞结果，如下。
  在rho方法中，以`"my name is renhai"`为初始消息，不断迭代，可找到哈希值前32位相同的两个消息：
@@ -15,5 +35,5 @@
  * 哈希值1：`'687fcd9eea0c49dac2714ef40d9bbcafaa614b63e40ef5092803251fc78212c5'`
  * 消息2：`'7e2a72bb73f3c68b5e585822458b2536ac5b787152dabd70c7bf8c8c7ab1512f'`
  * 哈希值2：`'687fcd9ec430f9dbc2f9d1e6f2c447dd873c88580ff325aa6586272fd669094d'`
- * 对比哈希值1与哈希值2，可知其前32位均为`'687fcd9e'`
+ * 对比哈希值1与哈希值2，可知其前32位均为`**'687fcd9e'**`
 
