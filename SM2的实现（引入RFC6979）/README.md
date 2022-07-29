@@ -33,7 +33,7 @@ import hashlib
   SM2的签名算法主要由预计算、密钥生成、签名、验证等步骤组成，具体如下：
  * **初始化参数**  
  该部分主要根据国密局给出的规范定义设置`p`、`a`、`b`、`n`、`Gx`、`Gy`等参数
- ```
+ ```Python
  def init_():
     p=int('0xFFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFF',16)
     a=int('0xFFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFC',16)
@@ -49,7 +49,7 @@ import hashlib
  ```
  * **预计算**  
  计算`ZA`，由于计算过程中需要`SM3`，因此引入此前实现的`SM3`代码
- ```
+ ```Python
  def Precompute(param,ID_A,G):
     ENTL_A = padding(hex((len(ID_A)-2)*4),2)
     x_G=hex(G[0])
@@ -66,7 +66,7 @@ import hashlib
  ```
  * **生成密钥**  
  生成`dA`、`k`等密钥，其中生成`k`时，引入`KFC6979`，利用公式`k=SHA256(d+Hash(msg))`，确定性计算`k`
- ```
+ ```Python
  def generate_k(mes,d):
     Hash_m = sm3.sm3_hash(mes)
     mes_new = hex(d) + Hash_m
@@ -76,7 +76,7 @@ import hashlib
  ```
  * **计算签名**  
  根据SM2的定义计算消息签名值
- ```
+ ```Python
  def sm2_sig(mes,param,z,G,dA):
     M=z+mes
     e=int(sm3.sm3_hash(M),16)
@@ -92,7 +92,7 @@ import hashlib
  ```
  * **验证函数**  
  根据SM2的定义编写验证函数，若验证通过，则输出`True`，若验证不通过，则输出`False`
- ```
+ ```Python
  def verify(mh,rh,sh,param,z,G,pA): #其中m,r,s,z都是十六进制数
     #首先把r,s都变成数
     r=int(rh,16)
