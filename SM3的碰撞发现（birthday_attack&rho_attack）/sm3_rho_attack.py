@@ -2,22 +2,29 @@ import sm3
 
 
 #rho攻击
-def rho_attack(mes):
+def rho_attack(mes,bit):
     mes_list=[mes]
     hash_list=[]
-    for i in range(pow(2,16)):
+    for i in range(pow(2,int(bit /2))):
         mes=sm3.sm3_hash(mes)
-        hash_list.append(mes[0:8]) #寻找前32位相同
+        hash_list.append(mes[0:int(bit / 4)]) #寻找前bit位相同
         mes_list.append(mes)
         for j in range(0,i):
-            if hash_list[j]==mes[0:8]:
-                return [mes_list[j],mes_list[i],hash_list[j],hash_list[i]]
-        print('pass')
-    print('Fail !')
+            if hash_list[j]==mes[0:int(bit / 4)]:
+                print('发现前',bit,'位碰撞！')
+                print('消息1:',mes_list[j])
+                print('哈希值1:',sm3.sm3_hash(mes_list[j]))
+                print('消息2:',mes_list[i])
+                print('哈希值2:',sm3.sm3_hash(mes_list[i]))
+                print('哈希值相等部分为:',hash_list[j])
+                return 
+    print('本轮未能发现碰撞，请再次执行代码!')
 
 if __name__ == '__main__':
     mes='my name is renhai' #初始消息
-    print(rho_attack(mes))
+    bit = 16 #寻找前bit位碰撞，为了便于助教检验代码，此处将参数设置为16，实际上最终找到了前32位相等的碰撞，附在代码后，请助教查阅。
+    rho_attack(mes,bit)
+
 
 """
 消息1：'c563692c21e31639f127ffc500d142bae4b7a6746a69397d9eae124bc47c4527'
