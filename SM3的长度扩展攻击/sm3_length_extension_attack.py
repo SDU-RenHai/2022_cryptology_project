@@ -4,11 +4,6 @@ import sm3
 iv = [0x7380166f, 0x4914b2b9, 0x172442d7, 0xda8a0600,
       0xa96f30bc, 0x163138aa, 0xe38dee4d, 0xb0fb0e4e]
 
-#随机消息m1
-mes='my name is renhai'
-
-#我们希望添加的内容m2
-mes_add='I like cryptology'
 
 #求Hash(m1||padding||m2)，记为H2
 def sm3_hash(mes,mes_add):
@@ -44,6 +39,10 @@ def compare(mes,mes_add):
         print('Fail !')
 
 if __name__ == '__main__':
+    #随机消息m1
+    mes='my name is renhai'
+    #我们希望添加的内容m2
+    mes_add='I like cryptology'
     print('随机选取消息m1:',mes)
     print('需要添加在其后的内容:',mes_add)
     compare(mes, mes_add)
