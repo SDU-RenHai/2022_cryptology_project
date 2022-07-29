@@ -4,7 +4,7 @@
 * **任海（学号：201900460064）**  
 * **牛巨鑫（学号：201900460055）**  
 ## 完成项目
-:heavy_check_mark: **Project 1: do your best to optimize SM3 implementation (software)** 
+:one: **Project 1: do your best to optimize SM3 implementation (software)** 
 * **完成人：牛巨鑫**
 * **完成时间：2022年7月26日**
 * **项目文件夹：SM3_IMPL_AND_OPT**  
