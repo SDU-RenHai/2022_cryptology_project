@@ -34,4 +34,40 @@ import string
  * 将`sm3.py`、`sm2_enc.py`文件放入同一文件夹
  * 运行`sm2_enc.py`
  * 运行案例截图：
+ ![20220729232228](images/20220729232228.png)
  
+ **PGP方案代码的执行：** 
+ * 将`sm3.py`、`sm2_enc.py`、`PGP.py`文件放入同一文件夹
+ * 运行`PGP.py`
+ * 运行案例截图：
+ ![20220729231657](images/20220729231657.png)
+ 
+  ## 代码说明  
+  **sm3.py、sm2_enc.py:**  
+  SM3算法的实现已做过阐述，SM2的加密算法与SM2的签名算法相似，在此也不做重点阐述。
+  **PGP.py:**  
+  在PGP方案的代码实现环节，实际上主要分为消息发送方加密信息和消息接收方解密信息两部分，具体如下：
+  * 消息发送方加密信息，用AES加密消息，用SM2加密算法加密AES密钥，并将消息与密钥加密后的结果一并发送给消息接收方：
+  ```Python
+  def PGP_enc(mes,key,pk):
+    cryptor = AES.new(key.encode('utf-8'), AES.MODE_OFB , b'0000000000000000')
+    len_mes = len(mes)
+    if len_mes % 16 != 0 :
+        add = 16 - (len_mes % 16)
+    else:
+        add = 0
+    mes = mes +('0' *add)
+    ciphertext = cryptor.encrypt(mes.encode('UTF-8')) 
+    AES_mes = binascii.b2a_hex(ciphertext).decode('UTF-8') #使用AES加密消息后的密文
+    sm2_key = sm2_enc.Encrypt(key,  pk) #使用sm2算法加密AES使用的密钥key
+    return AES_mes,sm2_key
+  ```
+  * 消息接收方解密信息，先用SM2加密算法解密AES密钥信息，再用密钥解密AES，得到消息：
+  ```Python
+  def PGP_dec(AES_mes,sm2_key,sk):
+    key = sm2_enc.decrypt(sm2_key, sk) #解密由sm2算法加密的key
+    cryptor = AES.new(key.encode('utf-8'), AES.MODE_OFB , b'0000000000000000')
+    plain_text = cryptor.decrypt(binascii.a2b_hex(AES_mes)) 
+    mes = plain_text.decode('utf-8').rstrip('0') #解密消息
+    return key,mes
+  ```
