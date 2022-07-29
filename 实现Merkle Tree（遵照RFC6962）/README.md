@@ -3,7 +3,24 @@
 :heavy_check_mark: **Project: Impl Merkle Tree following RFC6962**  
 ## 项目介绍  
 该项目遵照RFC6962标准，实现Merkle Tree。Merkle Tree类似于二叉树，叶子节点和树节点中的值均为Hash值，其结构如下图所示。计算过程中，自底向上，两两配对，并添加前缀码，若叶子节点个数为奇数，则末尾节点上移一层参与计算。
-
+ ![20220729204845](images/20220729204845.png)  
+ ## 项目完成人
+ * **任海（学号：201900460064）**  
+ ## 运行指导 
+ **开发环境：** 
+ * Windows Visual Studio Code  
+ * Python 3.7.9  
+ 
+  **依赖库：**  
+ ```Python
+import hashlib
+import random
+import string
+ ```
+ **Merkle Tree代码执行**  
+ * 运行`merkle_tree.py`
+ * 运行案例截图：
+ 
 
  * **定义Merkle Tree的类结构**  
  包括左子节点、右子节父节点、兄弟节点、是否为根节点、是否为父节点的左子树、本节点的值、Hash值等。
