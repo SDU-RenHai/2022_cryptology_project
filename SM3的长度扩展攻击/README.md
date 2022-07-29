@@ -23,4 +23,14 @@
   * 将`sm3.py`、`sm3_length_extension_attack.py`文件放于同一文件夹内  
   * 运行`sm3_length_extension_attack.py`
   * 运行案例截图：
+  ![20220729201324](images/20220729201324.png)  
   
+  ## 代码说明  
+  
+  该项目包含`sm3.py`、`sm3_length_extension_attack.py`两个文件，前者是SM3的实现算法，在长度扩展攻击中对各消息值进行Hash操作，作为模块导入至后者。`sm3_length_extension_attack.py`是对前文提到的长度扩展攻击步骤的实现，主要为三步，具体如下：
+  * 计算Hash(m1||padding||m2)，记为H2  
+   ![20220729201348](images/20220729201348.png)  
+  * 已知Hash(m1),记为H1,利用长度扩展攻击，以H1为初始向量，求Hash(m2),记为H3  
+   ![20220729201401](images/20220729201401.png)  
+  * 对比H2和H3，若二者相等，则成功构造出对消息m1||padding||m2的伪造散列值H3  
+  ![20220729201411](images/20220729201411.png) 
