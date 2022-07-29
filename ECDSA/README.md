@@ -39,7 +39,7 @@ from ecdsa import SigningKey, NIST256p,numbertheory, ellipticcurve, VerifyingKey
  
  该文件主要是以ECDSA算法为例，对ESCDA、Schnorr、SM2-sig算法共同存在的部分缺陷的实现，具体如下：
  * 借助`ecdsa`库生成ECDSA签名方案的各项参数：
- ```
+ ```Python
  def init_():
     sk = SigningKey.generate(curve=NIST256p) #生成私钥d
     vk = sk.verifying_key  # 生成P的横纵坐标级联
@@ -59,14 +59,14 @@ from ecdsa import SigningKey, NIST256p,numbertheory, ellipticcurve, VerifyingKey
     return sk,vk,d,P,n,K,mes,sign,r,s,e
  ```
  * 泄露`k`则导致`d`的泄露：
- ```
+ ```Python
  def loss_k_loss_d(mes,s,r,K,n,e):
     r_inv = libnum.invmod(r, n)
     d = r_inv * (K * s - e) % n
     print('在已知K的情况下成功计算出d:',d,'\n')
  ```
  * 若重复使用`K`，则可计算出私钥`d`，即私钥`d`也泄露：
- ```
+ ```Python
  def reuse_k_loss_d(sk,K,n,e,r,s):
     mes_2=b'renhai'
     sign_2 = sk.sign(mes_2, k=K, hashfunc=hashlib.sha256)
@@ -81,7 +81,7 @@ from ecdsa import SigningKey, NIST256p,numbertheory, ellipticcurve, VerifyingKey
     print('在对mes和mes_2使用共同的K后,计算出d:', d_2,'\n')
  ```
   * 两个用户，使用相同的`K`，则可以相互推断对方的私钥`d`:
-  ```
+  ```Python
   def  two_k_loss_d(d,K,e,s,n):
     sk_2 = SigningKey.generate(curve=NIST256p) #用户2再生成一个d
     vk_2 = sk_2.verifying_key  # P的横坐标纵坐标级联
@@ -100,7 +100,7 @@ from ecdsa import SigningKey, NIST256p,numbertheory, ellipticcurve, VerifyingKey
     print('相互推断出的d2:',d2,'\n')
   ```
   * 若`（r，s）`是有效签名，则`（r，-s）`也是有效签名:
-  ```
+  ```Python
   #(r,s)是有效签名，则(r,-s)也是有效签名
 def  rs_rs(s,sign,vk,mes):
     s_2 = -s % n
@@ -113,7 +113,7 @@ def  rs_rs(s,sign,vk,mes):
     print('使用新签名进行验证:',vk.verify(sign_2, mes, hashfunc=hashlib.sha256),'\n')
   ```
   * 在CEDSA和Schnorr算法中，使用相同的私钥`d`和`K`，导致私钥`d`泄露:
-  ```
+  ```Python
   def ecdsa_schnorr(d,sk,mes,K,n,s,r,e):
     G = sk.curve.generator
     e_1 = int(hashlib.sha256((K * G).to_bytes() + mes).hexdigest(), 16)
@@ -124,7 +124,7 @@ def  rs_rs(s,sign,vk,mes):
   ```
    **ECDSA_forge.py：**  
    该签名伪造的实质是若验签时不检查消息，则可伪造任意消息的签名：
-   ```
+   ```Python
    def loss_mes_forge(n,sk):
     u = random.randint(1, n)
     v = random.randint(1, n)
