@@ -47,7 +47,7 @@ if __name__ == '__main__':
     print('伪造中选取的u:',hex(u),'\n')
     print('伪造中选取的v:',hex(v),'\n')
     print("构造的e':",hex(e1),'\n')
-    print('最终伪造的签名:',(hex(r1),hex(s1)))
+    print("最终伪造的签名(r',s'):",(hex(r1),hex(s1)))
 
 
 """
@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
 构造的e': 0xb58eb4cfda7288afb29c3d7cf5ed07d024ac193f858d48ea45af96fe77c65bbb
 
-最终伪造的签名: ('0x834cd2b3dbbf7e201cc80afaa43e10b0ebcbec27f3795048b2a0bb697de9866', '0x61fd101a4831d145d12f920fe0980a3736d6b0c773aba02ef9f0f127c5963c29548350a913a8cec0d942b5cb80be69634166f7c6e32c6decfd63284b0a0c7e2')
+最终伪造的签名(r',s'): ('0x834cd2b3dbbf7e201cc80afaa43e10b0ebcbec27f3795048b2a0bb697de9866', '0x61fd101a4831d145d12f920fe0980a3736d6b0c773aba02ef9f0f127c5963c29548350a913a8cec0d942b5cb80be69634166f7c6e32c6decfd63284b0a0c7e2')
 
 """
 
