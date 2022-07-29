@@ -75,8 +75,8 @@ def  track_path(node):
     path.reverse()
     hash_value_list.reverse()
 
-    print('路径：',path) #输出路径
-    print('Hash值列表：',hash_value_list) #输出路径上节点的Hash值
+    print('从根节点到该节点的路径：',path) #输出路径
+    print('从根节点到该节点的路径中节点的Hash值列表:',hash_value_list) #输出路径上节点的Hash值
     return path,hash_value_list
 
 
@@ -123,7 +123,7 @@ def  get_string_list():
 def test_func():
     leaves = get_string_list()
     root = construct_tree(leaves) #形成根节点
-    print('根节点的Hash值:',root.hash_value)
+    print('Merkle Tree构建成功,根节点的Hash值:',root.hash_value)
     test_node = root.left.right.left.right  #设置需要验证的节点
     path, hash_values_list_ = track_path(test_node) #生成路径和Hash值列表，用于验证
     hash_values_list_.reverse()
@@ -140,9 +140,8 @@ if __name__ == '__main__':
 """
 测试结果实例：
 
-test_node = root.left.right.left.right
-根节点的Hash值: cd5d050a041ba7b94fd5c60f286c1deb941bdf3e5ac70374df7a340faefde00f
-路径： ['l', 'r', 'l', 'r', '0']
-Hash值列表： ['cd5d050a041ba7b94fd5c60f286c1deb941bdf3e5ac70374df7a340faefde00f', 'f5212d9ad916fb2164f5d9968275ffc09ca1bdde3375d1dd46fe2738fd57463e', '7a0e2767e09348afac60952e19ac5bef2c741b8f4d82aee12296738063b9b63a', 'ab7ea80d4f5cf57f5d98197bd6605a92194fa4e52030d75b96ce19aedab4c236', '60f6d2e649fb8dfc8ea4f0d64859fbd19a77973b1d6ed6d7ece6e97e1c7ec3b2', 'd7222dfaf33148c1f91b7d6f6d51d3e9542a1d2452c15229ca5c65a544d12795d5446567f09104f9a723d7ddadc9d87e9f30d69acac2f0cc633cc606295140e2']
+Merkle Tree构建成功,根节点的Hash值: 00646acf79f91ab8b284e387c42aa3f076beb906bb56bc082b2c121be9957e01
+从根节点到该节点的路径： ['l', 'r', 'l', 'r', '0']
+从根节点到该节点的路径中节点的Hash值列表: ['00646acf79f91ab8b284e387c42aa3f076beb906bb56bc082b2c121be9957e01', '266dee02e3cb14611688032a6df9381d9c5ceec75f475b7986717756e2b45d04', 'c0467d156329e67fc02ea783c00bc7f50a963aa2ff5fb18b3d6b371879631a98', '7e87482456bbf9b5c7f94021106166846a94e2578b46ef16432e35435c645a89', '705475f1c22a74ce3f21fcbb301145e926575927cdd59c7a0204936915164301', '84cefa5be171f64f90622798eb315ea272dd04f7603d69031fdfdb6966e820b54da8b72fb2a3250248cd7b0b0ea515d31c3cee5c06f36f8eec585a000bbc8eaf']
 路径有效，节点存在!
 """
