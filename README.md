@@ -2,11 +2,11 @@
 ===
 ## 小组成员
 * **任海**  
-**学号：201900460064**  
-**Github账号:**
+学号：201900460064  
+Github账号:
 * **牛巨鑫**  
-**学号：201900460055**  
-**Github账号:**
+学号：201900460055  
+Github账号:
 ## 完成项目
 :heavy_check_mark: **Project 1: do your best to optimize SM3 implementation (software)** 
 * **完成人：牛巨鑫**
