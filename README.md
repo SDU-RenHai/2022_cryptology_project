@@ -17,7 +17,7 @@
 :heavy_check_mark: **Project 2: implement SM3**  
 * **完成人：任海**
 * **完成时间：2022年7月20日（首次上传代码）、2022年7月29日（参照助教要求，对项目代码、说明文件进行统一整理）**
-* **项目文件夹：SM3的碰撞发现（birthday_attack&rho_attack）**
+* **项目文件夹：[SM3的碰撞发现（birthday_attack&rho_attack）](SM3的碰撞发现（birthday_attack&rho_attack）)**
 ****
 :heavy_check_mark: **Project 3: implement the naïve birthday attack of reduced SM3**  
 * **完成人：任海**
