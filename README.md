@@ -37,7 +37,7 @@
 :heavy_check_mark: **Project 6: Impl Merkle Tree following RFC6962**  
 * **完成人：任海**
 * **完成时间：2022年7月22日（首次上传代码）、2022年7月29日（参照助教要求，对项目代码、说明文件进行统一整理）**
-* **项目文件夹：[实现Merkle Tree（遵照RFC6962）](实现Merkle Tree（遵照RFC6962）)**
+* **项目文件夹：[实现Merkle Tree（遵照RFC6962）](https://github.com/SDU-RenHai/2022_cryptology_project/tree/main/%E5%AE%9E%E7%8E%B0Merkle%20Tree%EF%BC%88%E9%81%B5%E7%85%A7RFC6962%EF%BC%89)**
 ****
 :heavy_check_mark: **Project 7: verify the above pitfalls with proof-of-concept code**  
 * **完成人：任海**
